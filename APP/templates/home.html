@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+
+{% block body %}
+  <form method="post" action = "">
+    <label for="ingredients">Ingredients</label>
+    <input name="ingredients" id="ingredients" required>
+    <input type="submit" value="Search">
+  </form>
+  {% for dish,recepy in recepies.items() %}
+  <h2>{{ dish }}</h2>
+      <p>{{recepy}}</p>
+
+  {% endfor %}
+{% endblock body %}

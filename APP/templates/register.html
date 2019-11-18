@@ -1,0 +1,19 @@
+{% extends "template.html" %}
+<section class="content">
+{% block body %}
+    <form method="post">
+      <label for="username">Username</label>
+      <input name="username" id="username" required>
+      <label for="name">Name</label>
+      <input name="name" id="name" required>
+      <label for="cusine">Cusine</label>
+      <input name="cusine" id="cusine" required>
+      <label for="allergy">Allergy</label>
+      <input name="allergy" id="allergy" required>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password" required>
+      <input type="submit" value="Register">
+    </form>
+ {% endblock body %}
+</section>
+ 

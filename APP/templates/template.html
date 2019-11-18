@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CONCUT</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+        <nav>
+                <h1>CONCUT</h1>
+                <ul>
+                  {% if g.user %}
+                    <li><span>{{ g.user['username'] }}</span>
+                    <li><a href="{{ url_for('index') }}">Log Out</a>
+                  {% else %}
+                    <li><a href="{{ url_for('register') }}">Register</a>
+                    <li><a href="{{ url_for('index') }}">Log In</a>
+                  {% endif %}
+                </ul>
+        </nav>
+{% block body %}{% endblock %}
+</body>
+</html>
