@@ -59,6 +59,13 @@ def search(data,ingredients):
 
     return suggestions, grocery, keywords
 
+def add_grocery(grocery, data, ingredients):
+	missing_ingredients = []
+	for i in range(len(data)):
+		temp = data.ingredients[i]
+		res = [x.strip() for x in temp.split(',')]
+		missing_ingredients = set(ingredients) - set(res)
+	return missing_ingredients
 
 def implicit_filtering(prefer,smap):
     recipe_score = {}
