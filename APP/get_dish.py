@@ -94,7 +94,7 @@ def ranking(recipe_rating,recipe_score):
     ## sorting it OUT
     recipe_rank = sorted(recipe_rank.items(), key=operator.itemgetter(1), reverse=True)
     dishes = []
-    dish_attri = []
+    dishes_attri = []
     for dish in recipe_rank:
         dishes.append(dish[0])
         dishes_attri.append(dish[1], dish[2], dish[3], dish[4])
