@@ -13,6 +13,7 @@ def index():
         password = request.form['password']
         if (authenticate_user_details(username,password)):
             user = username
+            #allergy = 
             return redirect(url_for('home'))
     return render_template('login.html')
 
