@@ -47,7 +47,7 @@ def search(data,ingredients):
             #print("Best Match - ", data.Dish_Name[i])
             suggestions.append(data.Dish_Name[i])
             cv = CountVectorizer()
-            attri = data.Cuisine[i] + ' , ' + data.Difficulty[i] + ' , ' + data.Meat[i] +','+
+            attri = data.Cuisine[i] + ' , ' + data.Difficulty[i] + ' , ' + data.Meat[i]
             attri = [attri]
             cv.fit(attri)
             keywords.append(list(cv.vocabulary_.keys()))
@@ -122,8 +122,7 @@ def convertUserData(user):
 
 def get_dish_name(ingredients,username):
     ## need to store user ingredients
-    path = "./User Data/" + username + ".csv"
-    users = pd.read_csv(path)
+    users = pd.read_csv("./User Data/"+username+".csv")
     recipes = pd.read_csv("./Recipe Model/Dataset.csv")
     
     suggestions, grocery, keywords = search(recipes,ingredients)
@@ -143,7 +142,10 @@ def get_dish_name(ingredients,username):
         recipe_rating[dish] = 1
         
     ## ranking wrt recipe_rating*recipe_score
+    print(recipe_rating,recipe_score)
     return ranking(recipe_rating,recipe_score)
+
     
 ## get_dish name is main function
-    
+    if __name__ == '__main__':
+        get_dish_name()

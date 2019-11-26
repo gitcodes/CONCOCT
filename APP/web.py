@@ -31,7 +31,7 @@ def register():
         metadata.append(request.form['expertise_level'])
         userdetails = [details,metadata]
         save_user_details(userdetails)
-        return  render_template('home.html',recepies = recipies_for_dishes)
+        return redirect(url_for('home'))
     return render_template('register.html')
 
 @app.route('/home',methods=('GET', 'POST'))

@@ -53,11 +53,13 @@
 			<li class="uk-background-muted uk-padding">
 				<div class="uk-width-1-1 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover">
 					<h2 class="uk-text-bold">List of ingredients that we assume you have:</h2>
-					{% for i in ing.split(",") %}
+					{% with ings=ing %}
+					{% for i in ings.split(",") %}
 					<ul>
 					<li class="uk-text-normal">{{i}}</li>
 					</ul>
 					{% endfor %}
+					{% endwith %}
 				</div>
 			</li>
 
