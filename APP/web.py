@@ -47,7 +47,7 @@ def home():
         user_ingredient_list = [x.strip() for x in user_ingredients.split(',')]
         dishes =  get_dish_name(user_ingredient_list,user)        
         recipies_for_dishes =  get_all_dish_recipes(dishes)
-    return render_template('home.html',recepies = recipies_for_dishes,ing = list_general_ingredients)
+    return render_template('home.html',recipies = recipies_for_dishes,ing = list_general_ingredients)
 
 
 def get_all_dish_recipes(dishes):
