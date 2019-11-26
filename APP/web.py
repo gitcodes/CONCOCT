@@ -28,6 +28,7 @@ def register():
         metadata.append(request.form['cusine'])
         details.append(request.form['allergy'])
         metadata.append(request.form['spice_level'])
+        metadata.append(request.form['expertise_level'])
         userdetails = [details,metadata]
         save_user_details(userdetails)
         return redirect(url_for('home'))
