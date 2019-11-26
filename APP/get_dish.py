@@ -2,6 +2,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 import pandas as pd
 import operator
+import csv  
 
 def sort_coo(coo_matrix):
     tuples = zip(coo_matrix.col, coo_matrix.data)
@@ -118,6 +119,11 @@ def convertUserData(user):
     prefer=extract_topn_from_vector(feature_names,sorted_items,10)
     
     return prefer
+
+def user_update(additional_attributes):
+    user_File = pd.read_csv("./User Data/"+username+".csv",'a')
+    user_File.write(additional_attributes)
+    user_File.close()
 
 
 def get_dish_name(ingredients,username):
