@@ -1,6 +1,6 @@
 from get_dish import get_dish_name
 from get_recepie import get_recipe
-from utilities import save_user_details
+from utilities import save_user_details,authenticate_user_details
 from flask import (Flask,Blueprint, flash, g, redirect, render_template, request, session, url_for,jsonify)
 
 app = Flask(__name__)   
@@ -10,7 +10,9 @@ def index():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        return redirect(url_for('home'))
+        if (authenticate_user_details(username,password)):
+            session['username'] = username
+            return redirect(url_for('home'))
     return render_template('login.html')
 
 @app.route('/register',methods=('GET', 'POST'))
@@ -37,7 +39,7 @@ def home():
         user_ingredients = request.form['ingredients']
         user_ingredients = user_ingredients +','+list_general_ingredients
         user_ingredient_list = [x.strip() for x in user_ingredients.split(',')]
-        dishes =  get_dish_name(user_ingredient_list)        
+        dishes =  get_dish_name(user_ingredient_list,session['username'])        
         recipies_for_dishes =  get_all_dish_recipes(dishes)
     return render_template('home.html',recepies = recipies_for_dishes,ing = list_general_ingredients)
 

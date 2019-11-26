@@ -16,5 +16,22 @@ def create_user_specific_metadata(username,user_meta_data):
             spamwriter = csv.writer(csvfile, delimiter=',')
             spamwriter.writerow(user_meta_data)
 
+def get_user_details():
+    users_list =[]
+    with open('Data/user.csv', 'r') as f:
+        reader = csv.reader(f)
+        users_list = list(reader)
+    return users_list
+
+
+def authenticate_user_details(username,password):
+    users = get_user_details()
+    for user in users:
+        if username in user:
+            if password == user[2]:
+                return True
+    
+
+
 
 

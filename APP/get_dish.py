@@ -113,9 +113,9 @@ def convertUserData(user):
     return prefer
 
 
-def get_dish_name(ingredients):
+def get_dish_name(ingredients,username):
     ## need to store user ingredients
-    users = pd.read_csv("./User Data/User - John.csv")
+    users = pd.read_csv("./User Data/"+username+".csv")
     recipes = pd.read_csv("./Recipe Model/Dataset.csv")
     
     suggestions, grocery, keywords = search(recipes,ingredients)
