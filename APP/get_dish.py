@@ -92,10 +92,12 @@ def ranking(recipe_rating,recipe_score):
         recipe_rank[key] = value * recipe_rating[key]
     
     ## sorting it OUT
-    recipe_rank = sorted(recipe_rank.items(), key=operator.itemgetter(1),reverse=True)
+    recipe_rank = sorted(recipe_rank.items(), key=operator.itemgetter(1), reverse=True)
     dishes = []
+    dish_attri = []
     for dish in recipe_rank:
         dishes.append(dish[0])
+        dishes_attri.append(dish[1], dish[2], dish[3], dish[4])
     return dishes
         
 
@@ -116,12 +118,12 @@ def convertUserData(user):
     sorted_items=sort_coo(tf_idf_vector.tocoo())
     
     #extract only the top n; n here is 10
-    prefer=extract_topn_from_vector(feature_names,sorted_items,10)
+    prefer=extract_topn_from_vector(feature_names, sorted_items,10)
     
     return prefer
 
 def user_update(additional_attributes):
-    user_File = pd.read_csv("./User Data/"+username+".csv",'a')
+    user_File = pd.read_csv("./User Data/" + username + ".csv", 'a')
     user_File.write(additional_attributes)
     user_File.close()
 
