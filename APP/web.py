@@ -28,6 +28,7 @@ def register():
         details.append(request.form['password'])
         metadata.append(request.form['cusine'])
         details.append(request.form['allergy'])
+        details.append(request.form['food_preference'])
         metadata.append(request.form['spice_level'])
         metadata.append(request.form['expertise_level'])
         userdetails = [details,metadata]
