@@ -2,15 +2,77 @@
 
 {% block body %}
 
+<div class="uk-card-container">
+	<div class="uk-card-header">
+		<h3 class="uk-card-title uk-text-muted">  </h3> 
+		</div>
 
-  <form method="post" action = "/home">
-    <label for="ingredients">Ingredients</label>
-    <input name="ingredients" id="ingredients" required>
-    <input type="submit" value="Search">
-  </form>
-  {% for dish,recepy in recepies.items() %}
-  <h2>{{ dish }}</h2>
-      <p>{{recepy}}</p>
+		<div class="uk-margin-large-left uk-margin-large-right uk-card-body">
+		<ul uk-tab>
+			<li><a href="#"> Recipes</a></li>
+			<li><a href="#"> Ingredients</a></li>
+			<li><a href="#"> User Attributes</a></li>
+			<li><a href="#"> Shopping Cart</a></li>
+		</ul>
 
-  {% endfor %}
+
+
+		<!-- Recipes -->
+
+
+		<ul class="uk-switcher uk-align-center">
+			<li class="uk-background-muted uk-padding">
+				<div class="uk-width-1-2 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover ">
+					<p>Recipes go here</p>
+
+					<form method="post" action = "/home">
+				    <label for="ingredients">Ingredients</label>
+				    <input name="ingredients" id="ingredients" required>
+				    <input type="submit" value="Search">
+				  </form>
+				  {% for dish,recepy in recepies.items() %}
+				  <h2>{{ dish }}</h2>
+				      <p>{{recepy}}</p>
+
+				  {% endfor %}
+				</div>
+			</li>
+
+
+		<!-- Ingredients -->
+
+
+			<li class="uk-background-muted uk-padding">
+				<div class="uk-width-1-2 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover">
+					<p> Ingredients go here</p>
+				</div>
+			</li>
+
+
+
+		<!-- User Atrributes -->
+
+
+			<li class="uk-background-muted uk-padding">
+				<div class="uk-width-1-2 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover">
+					
+					<p class="uk-text-warning">User attributes are here</p>
+				</div>
+			</li>
+
+
+
+		<!-- Shopping Cart -->
+
+
+			<li class="uk-background-muted uk-padding">
+				<div class="uk-width-1-2 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover">
+					<p> Shopping Cart </p>
+				</div>
+			</li>
+		</ul>
+
+
+	</div>
+ </div>
 {% endblock body %}
