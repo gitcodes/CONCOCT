@@ -70,9 +70,9 @@ def add_grocery(grocery, data, ingredients):
 def implicit_filtering(prefer,smap):
     recipe_score = {}
     
-    for key,value in smap.items():
+    for key, value in smap.items():
         tempScore=0
-        for i,dish in enumerate(smap[key]):
+        for i, dish in enumerate(smap[key]):
             
             try:
                 #print(dish)
