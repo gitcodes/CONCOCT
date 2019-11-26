@@ -26,7 +26,8 @@ def register():
         details.append(request.form['name'])
         details.append(request.form['password'])
         metadata.append(request.form['cusine'])
-        metadata.append(request.form['allergy'])
+        details.append(request.form['allergy'])
+        metadata.append(request.form['spice_level'])
         userdetails = [details,metadata]
         save_user_details(userdetails)
         return  render_template('home.html',recepies = recipies_for_dishes)
