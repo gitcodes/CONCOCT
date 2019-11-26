@@ -2,8 +2,8 @@
 {% block body %}
 
 
-<div class="uk-flex uk-flex-middle uk-margin-large-top uk-background-default">
-	<div class="uk-card uk-card-hover uk-align-center">
+<div class="uk-flex uk-flex-middle uk-margin-large-top uk-background-muted">
+	<div class="uk-card uk-card-hover uk-align-center uk-width-1-2">
 		<div class="uk-card-header uk-card-secondary">
 			<h3 class="uk-card-title"> Login </h3> 
 		</div>
@@ -13,7 +13,9 @@
 			        <input name="username" id="username" required/><br>
 			        <label for="password">Password</label><br>
 			        <input type="password" name="password" id="password" required/><br>
-			        <input class="uk-button uk-button-primary" type="submit" value="Log In">
+			        <p uk->
+			        <button class="uk-button uk-button-secondary" type="submit" >Log In</button>
+				    </p>
 			</form>
 		</div>
 		</div>

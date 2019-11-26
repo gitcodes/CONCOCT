@@ -1,19 +1,33 @@
 {% extends "template.html" %}
 <section class="content">
 {% block body %}
+
+<div class="uk-flex uk-flex-middle uk-margin-large-top uk-background-default">
+  <div class="uk-card uk-card-hover uk-align-center uk-width-1-2">
+    <div class="uk-card-header uk-card-secondary">
+      <h3 class="uk-card-title"> User Registration </h3> 
+    </div>
+
+    <div class="uk-card-body">
     <form method="post">
-      <label for="username">Username</label>
-      <input name="username" id="username" required>
-      <label for="name">Name</label>
-      <input name="name" id="name" required>
-      <label for="cusine">Cusine</label>
-      <input name="cusine" id="cusine" required>
-      <label for="allergy">Allergy</label>
-      <input name="allergy" id="allergy" required>
-      <label for="password">Password</label>
-      <input type="password" name="password" id="password" required>
-      <input type="submit" value="Register">
+      <label for="username">Username</label><br>
+      <input name="username" id="username" required><br>
+      <label for="name">Name</label><br>
+      <input name="name" id="name" required><br>
+      <label for="cusine">Cusine</label><br>
+      <input name="cusine" id="cusine" required><br>
+      <label for="allergy">Allergy</label><br>
+      <input name="allergy" id="allergy" required><br>
+      <label for="password">Password</label><br>
+      <input type="password" name="password" id="password" required><br>
+      <p uk-margin>
+      <button class="uk-button uk-button-secondary" type="submit">Register</button>
+    </p>
     </form>
+    </div>
+  </div>
+</div>
  {% endblock body %}
 </section>
+
  
