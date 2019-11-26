@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>CONCUT</title>
+<title>CONCOCT</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="{{url_for('static',filename='css/uikit.css') }}">
 <link rel="stylesheet" href="{{url_for('static',filename='css/uikit-rtl.css') }}">
@@ -11,17 +11,22 @@
 </script>
 </head>
 <body>
-        <nav>
-                <h1>CONCUT</h1>
-                <ul>
+        <nav class="uk-navbar-container" uk-navbar style="position: relative; z-index: 980;">
+                <div lass="uk-navbar-center">
+                <h1 class="uk-text-secondary">CONCOCT</h1>
+                </div>
+
+                <div class="uk-navbar-right">
+                  <ul class="uk-navbar-nav uk-margin-right">
                   {% if g.user %}
-                    <li><span>{{ g.user['username'] }}</span>
-                    <li><a href="{{ url_for('index') }}">Log Out</a>
+                    <li><span>{{ g.user['username'] }}</span></li>
+                    <li><a class="uk-icon-small-right" uk-icon="sign-out" href="{{ url_for('index') }}">Log Out</a></li>
                   {% else %}
-                    <li><a href="{{ url_for('register') }}">Register</a>
-                    <li><a href="{{ url_for('index') }}">Log In</a>
+                    <li><a class="uk-icon-small-right" uk-icon="user" href="{{ url_for('register') }}">Register</a></li>
+                    <li><a class="uk-icon-small-right" uk-icon="sign-in" href="{{ url_for('index') }}">Log In</a></li>
                   {% endif %}
                 </ul>
+                </div>
         </nav>
 {% block body %}{% endblock %}
 </body>
