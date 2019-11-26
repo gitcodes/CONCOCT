@@ -57,9 +57,10 @@ def get_all_dish_recipes(dishes):
     print(recipies_dishes)
     return recipies_dishes
 
+@app.route('/home',methods=('GET', 'POST'))
 def get_user_atributes(user):
     user_attributes = convertUserData(users)
-    return user_attributes
+    return render_template('home.html',attributes=  user_attributes, ing = list_general_ingredients)
 
 if __name__ == '__main__':
     app.run(debug=True)
