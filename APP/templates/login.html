@@ -1,10 +1,22 @@
 {% extends "template.html" %}
 {% block body %}
-<form method="post">
-        <label for="username">Username</label>
-        <input name="username" id="username" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required>
-        <input type="submit" value="Log In">
-</form>
+
+
+<div class="uk-flex uk-flex-middle uk-margin-large-top uk-background-default">
+	<div class="uk-card uk-card-hover uk-align-center">
+		<div class="uk-card-header uk-card-secondary">
+			<h3 class="uk-card-title"> Login </h3> 
+		</div>
+		<div class="uk-card-body">
+			<form method="post">
+			        <label for="username">Username</label>
+			        <input name="username" id="username" required>
+			        <label for="password">Password</label>
+			        <input type="password" name="password" id="password" required>
+			        <input type="submit" value="Log In">
+			</form>
+		</div>
+		</div>
+	</div>
+	
  {% endblock body %}
