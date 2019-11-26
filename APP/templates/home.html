@@ -71,7 +71,14 @@
 			<li class="uk-background-muted uk-padding">
 				<div class="uk-width-1-1 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover">
 					
-					<p class="uk-text-warning">User attributes are here</p>
+					<h2 class="uk-text-bold">User Attribute Table:</h2>
+					{% with ings = attributes %}
+					{% for i in ings.split("\n") %}
+					<ul>
+					<li class="uk-text-normal">{{i}}</li>
+					</ul>
+					{% endfor %}
+					{% endwith %}
 				</div>
 			</li>
 
