@@ -32,12 +32,14 @@ def register():
 @app.route('/home',methods=('GET', 'POST'))
 def home():
     recipies_for_dishes = {}
+    list_general_ingredients = "oil,olive oil,salt,pepper,flour,butter,cumin,chili flakes,black pepper,thyme,garlic,ginger,mint,chillies,sage,cinnamon"
     if request.method == 'POST' :
         user_ingredients = request.form['ingredients']
+        user_ingredients = user_ingredients +','+list_general_ingredients
         user_ingredient_list = [x.strip() for x in user_ingredients.split(',')]
         dishes =  get_dish_name(user_ingredient_list)        
         recipies_for_dishes =  get_all_dish_recipes(dishes)
-    return render_template('home.html',recepies = recipies_for_dishes)
+    return render_template('home.html',recepies = recipies_for_dishes,ing = list_general_ingredients)
 
 
 def get_all_dish_recipes(dishes):
