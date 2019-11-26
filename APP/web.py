@@ -57,6 +57,10 @@ def get_all_dish_recipes(dishes):
     print(recipies_dishes)
     return recipies_dishes
 
+def get_user_atributes(user):
+    user_attributes = convertUserData(users)
+    return user_attributes
+
 if __name__ == '__main__':
     app.run(debug=True)
     
