@@ -29,23 +29,23 @@
 				    <input name="ingredients" id="ingredients" required>
 				    <button class="uk-icon-small-left" uk-icon="search" type="submit"></button>
 				  </form>
-				  {% for dish,recipie in recipies.items() %}
+						{% for dish,recipie in recipies.items() %}
 				  		{% with id = dish %}
-				  	<div class="uk-card-header">
-				  		<div class="uk-text-large uk-text-bolder uk-card-title">{{dish}}</div>
-					  		<div class="uk-align-right uk-card-body">
-					  			<a href="#" class="uk-icon-link" uk-icon="check" onclick=liked()>&nbsp;&nbsp;</a>
-					  			<a href="#" class="uk-icon-link" uk-icon="close" onclick=disliked()>&nbsp;&nbsp;</a>
-						  	</div>
-						  	<p class = "uk-text-muted">{{score[id]}}</p>
-					  
-				  </div>
+				  		<div class="uk-card uk-card-hover uk-background-muted uk-padding">
+					  		<div class="uk-text-large uk-text-bolder uk-card-title">{{dish}}
+						  		<div class="uk-align-right">
+						  			<a href="#" class="uk-icon-link" uk-icon="check" onclick=liked()>&nbsp;&nbsp;</a>
+						  			<a href="#" class="uk-icon-link" uk-icon="close" onclick=disliked()>&nbsp;&nbsp;</a>
+							  	</div>
+							  	<p class = "uk-text-muted">{{score[id]}}</p>
+						  
+							  </div>
 
-				  	<div class="uk-card-body">
-				      <p class="uk-text-normal">{{recipie}}</p>
-					</div>
+							  	
+							      <p class="uk-text-normal">{{recipie}}</p>
+						</div>
 						{% endwith %}
-					{% endfor %}
+						{% endfor %}
 				</div>
 			</li>
 
@@ -103,16 +103,14 @@
 
 			<li class="uk-background-muted uk-padding">
 				<div class="uk-width-1-1 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover">
-					<p> Shopping Cart </p>
+					<H2> Shopping Cart </H2>
 
 					{% for key, value in shopping.items() %}
-					<div class="uk-card">
-						<div class="uk-card-header">
-							<div class="uk-text-bolder">{{key}}</div>
-						</div>
-						<div class="uk-card-body">
-							<p>{{value}}</p>
-						</div>
+					<div class="uk-card uk-card-hover uk-background-muted uk-padding">
+						
+						<div class="uk-text-bold">{{key}}</div>
+						<p class = uk-text-normal>{{value}}</p>
+						
 					</div>
 					{% endfor %}
 
