@@ -13,7 +13,7 @@ def index():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        auth,allergy = authenticate_user_details(username,password)
+        auth = authenticate_user_details(username,password)
         if auth:
             user = username
             #allergy = 
@@ -48,23 +48,24 @@ def home():
         user_ingredients = request.form['ingredients']
         user_ingredients = user_ingredients + ',' + list_general_ingredients
         user_ingredient_list = [x.strip() for x in user_ingredients.split(',')]
-        dishes,prefer,shopping =  get_dish_name(user_ingredient_list,user,allergy)        
-        recipies_for_dishes =  get_all_dish_recipes(dishes)
-    return render_template('home.html', recipies = recipies_for_dishes, ing = list_general_ingredients,attributes =  user_attributes)
+        recipe_rank,prefer,shopping =  get_dish_name(user_ingredient_list,user)        
+        recipies_for_dishes =  get_all_dish_recipes(recipe_rank)
+        return render_template('home.html', recipies = recipies_for_dishes, score = recipe_rank, ing = list_general_ingredients, prefer=prefer, shopping=shopping)
+    return render_template('home.html', recipies = recipies_for_dishes, ing = list_general_ingredients, prefer={'no':0,'preferences':0},shopping ={'no':0,'shopping cart':0} )
 
+    # else:
+    #     recipe_rank,prefer,shopping =  get_dish_name(list_general_ingredients,user)        
+    #     recipies_for_dishes =  get_all_dish_recipes(recipe_rank)
+    #     print()
+    #     return render_template('home.html', recipies = {'no':0,'recipe':0}, score = {'no':0,'recipe':0} ,ing=list_general_ingredients,prefer = {'no':0,'preferences':0}, shopping={'no':0,'shopping cart':0})
 
 def get_all_dish_recipes(dishes):
     recipies_dishes = {}
-    for dish in dishes:
-       recipies_dishes[dish] =  get_recipe(dish)
-    print(recipies_dishes)
+    for dish,score in dishes.items():
+       recipies_dishes[dish] = get_recipe(dish)
+    print("recipies_dishes",recipies_dishes)
     return recipies_dishes
 
-#Cant call this here becaue the user input here is the actual user data file not user name ..else we have to make changes
-
-# def get_user_atributes(user):
-#     user_attributes = convertUserData(user)
-#     return user_attributes
 
 if __name__ == '__main__':
     app.run(debug = True)

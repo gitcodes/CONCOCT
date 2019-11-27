@@ -31,8 +31,8 @@ def authenticate_user_details(username,password):
         if username in user:
             if password == user[2]:
                 allergy = user[3]
-                print("allergy",allergy)
-                return True,allergy
+                # print("allergy",allergy)
+                return True
     
 
 

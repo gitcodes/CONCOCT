@@ -81,7 +81,6 @@ def search(data,ingredients):
 def implicit_scoring(prefer,smap):
     recipe_score = {}
 
-    
     for key, value in smap.items():
         tempScore=0
         for i, dish in enumerate(smap[key]):
@@ -96,6 +95,7 @@ def implicit_scoring(prefer,smap):
     return recipe_score
 
 
+
 def ranking(recipe_rating,recipe_score):
     recipe_rank={}
     
@@ -104,36 +104,11 @@ def ranking(recipe_rating,recipe_score):
     
     ## sorting it OUT
     recipe_rank = sorted(recipe_rank.items(), key=operator.itemgetter(1), reverse=True)
-    dishes = []
-    dishes_attri = []
-    for dish in recipe_rank:
-        dishes.append(dish[0])
-        dishes_attri.append(dish[1], dish[2], dish[3], dish[4])
-    return dishes
+    return recipe_rank
         
 
+
 def convertUserData(user):
-    '''
-    cv=CountVectorizer()
-    word_count_vector = cv.fit_transform(user)
-     
-    tfidf_transformer = TfidfTransformer()
-    tfidf_transformer.fit(word_count_vector)
-    
-    #generate tf-idf for the given document
-    tf_idf_vector=tfidf_transformer.transform(cv.transform(user))
-    
-    # you only needs to do this once, this is a mapping of index to 
-    feature_names=cv.get_feature_names()
-    
-    #sort the tf-idf vectors set.csv")
-    sorted_items=sort_coo(tf_idf_vector.tocoo())
-    
-    #extract only the top n; n here is 10
-    prefer=extract_topn_from_vector(feature_names,sorted_items,10)
-    
-    return prefer
-    '''
     cv=CountVectorizer()
     word_count_vector = cv.fit_transform(user)
      
@@ -163,24 +138,23 @@ def user_update(additional_attributes):
 
 def get_dish_name(ingredients,username):
     ## need to store user ingredients
-    print("username",username,allergy)
+    print("username",username)
     allergy2 =''
 
     try:
         users = pd.read_csv("./User Data/"+username+".csv")
     except:
-        pass
-    finally:
         users = pd.read_csv("./User Data/username.csv")
+    finally:
+        # users = pd.read_csv("./User Data/username.csv")
+        recipes = pd.read_csv("./Recipe Model/Updated_Dataset.csv")
 
-    recipes = pd.read_csv("./Recipe Model/Updated_Dataset.csv")
-    
-    ## allergies
-    user_attri = get_user_details()
-    for user in user_attri:
-        if username in user:
-            allergy2 = user[3]
-            print("allergy",allergy)
+        ## allergies
+        user_attri = get_user_details()
+        for user in user_attri:
+            if username in user:
+                allergy2 = user[3]
+                print("allergy",allergy2)
     
 
     suggestions, filterkey, keywords, shopping = search(recipes,ingredients)
@@ -206,9 +180,9 @@ def get_dish_name(ingredients,username):
         print("Exception")
 
     ## still have to check which user preference to take
-    print(users)
+    # print(users)
     prefer = convertUserData(users)
-    print("\nprefer - User preferences \n",prefer)
+    # print("\nprefer - User preferences \n",prefer)
  
     ## sets recipe scores according to the preferences returned in the previous line
     recipe_score = implicit_scoring(prefer,smap)
@@ -222,7 +196,7 @@ def get_dish_name(ingredients,username):
      
     ## ranking wrt recipe_rating*recipe_score
     # print(recipe_rating,recipe_score)
-    recipe_rank = ranking(recipe_rating,recipe_score)
+    recipe_rank = dict(ranking(recipe_rating,recipe_score))
     print("RecipeRank",recipe_rank)
 
     return recipe_rank,prefer,shopping

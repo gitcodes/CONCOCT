@@ -30,20 +30,23 @@
 				    <button class="uk-icon-small-left" uk-icon="search" type="submit"></button>
 				  </form>
 				  {% for dish,recipie in recipies.items() %}
-				  <div class="uk-card uk-background-muted uk-margin">
+				  		{% with id = dish %}
 				  	<div class="uk-card-header">
-				  		<div class="uk-text-large uk-text-bolder">{{dish}}
-				  		<div class="uk-align-right">
-				  			<a href="#" class="uk-icon-link" uk-icon="check" onclick=liked()>&nbsp;&nbsp;</a>
-				  			<a href="#" class="uk-icon-link" uk-icon="close" onclick=disliked()>&nbsp;&nbsp;</a>
-					  	</div>
-					  </div>
-					  </div>
+				  		<div class="uk-text-large uk-text-bolder uk-card-title">{{dish}}</div>
+					  		<div class="uk-align-right uk-card-body">
+					  			<a href="#" class="uk-icon-link" uk-icon="check" onclick=liked()>&nbsp;&nbsp;</a>
+					  			<a href="#" class="uk-icon-link" uk-icon="close" onclick=disliked()>&nbsp;&nbsp;</a>
+						  	</div>
+						  	<p class = "uk-text-muted">{{score[id]}}</p>
+					  
+				  </div>
+
 				  	<div class="uk-card-body">
 				      <p class="uk-text-normal">{{recipie}}</p>
-
-					  {% endfor %}
 					</div>
+						{% endwith %}
+					{% endfor %}
+				</div>
 			</li>
 
 
@@ -72,11 +75,24 @@
 				<div class="uk-width-1-1 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover">
 					
 					<h2 class="uk-text-bold">User Attribute Table:</h2>
-					{% for i in attributes %}
-					<ul>
-					<li class="uk-text-normal">{{i}}</li>
-					</ul>
-					{% endfor %}
+					<table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+					        <thead>
+					            <tr>
+					                <th class="uk-table-small">Score</th>
+					                <th class="uk-table-small"></th>
+				                </tr>
+			                </thead>
+			                <tbody>
+		                		{% with pre=prefer %}
+								{% for key,score in pre.items() %}
+								<tr>
+			                		<td class="uk-text-truncate">{{key}}</td>
+			                		<td class="uk-text-truncate">{{score}}</td>
+			                	</tr>
+        						{% endfor %}
+								{% endwith %}
+			                </tbody>
+	                </table>
 				</div>
 			</li>
 
@@ -88,6 +104,19 @@
 			<li class="uk-background-muted uk-padding">
 				<div class="uk-width-1-1 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover">
 					<p> Shopping Cart </p>
+
+					{% for key, value in shopping.items() %}
+					<div class="uk-card">
+						<div class="uk-card-header">
+							<div class="uk-text-bolder">{{key}}</div>
+						</div>
+						<div class="uk-card-body">
+							<p>{{value}}</p>
+						</div>
+					</div>
+					{% endfor %}
+
+
 				</div>
 			</li>
 		</ul>
