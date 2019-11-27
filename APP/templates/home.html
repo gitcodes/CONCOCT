@@ -72,13 +72,11 @@
 				<div class="uk-width-1-1 uk-padding uk-background-muted uk-align-center uk-card uk-card-hover">
 					
 					<h2 class="uk-text-bold">User Attribute Table:</h2>
-					{% with ings = attributes() %}
-					{% for i in ings.split("\n") %}
+					{% for i in attributes %}
 					<ul>
 					<li class="uk-text-normal">{{i}}</li>
 					</ul>
 					{% endfor %}
-					{% endwith %}
 				</div>
 			</li>
 
