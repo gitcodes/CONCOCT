@@ -130,39 +130,44 @@ def convertUserData(user):
     return prefer
 
 
-def user_update(recipe=0,username = "sujit"):
+def user_update(recipe="Irish Stew ",username = "sujit"):
     data = pd.read_csv("./Recipe Model/Updated_Dataset.csv")
     
     attri = ""
     for i in range(len(data)):
-        if data.Dish_Name[i] == recipe:
-            attri = data.Cuisine[i] + ' ' + data.Difficulty[i] + ' ' + data.Meat[i]+ ' ' + data.Spicyness[i] + ' ' + data.Price_of_Ingredients[i]
-            # attri = [attri]
-    print("attributes to be added",attri)
+
+        if recipe in list(data.Dish_Name):
+            # print("inside")
+            attri = str(data.Cuisine[i] + ' ' + data.Difficulty[i] + ' ' + data.Meat[i]+ ' ' + data.Spicyness[i] + ' ' + data.Price_of_Ingredients[i])
+    
+    add_data = ''
+    for one in attri.split(" "):
+        add_data = add_data+str(one)+" "
+    # print("attributes to be added",add_data)
     
     try:
         with open("./User Data/" + username + ".csv","r") as file:
             data = file.readlines()
 
-        print("data",data,type(data))
+        # print("data",data,type(data))
         user_File = str(data[0]).replace("\n"," ")
 
     except:
         pass
-        with open("./User Data/" + username + ".csv","r") as file:
+        with open("./User Data/username.csv","r") as file:
             data = file.readlines()
 
-        print("data",data,type(data))
+        # print("data",data,type(data))
         user_File = str(data[0]).replace("\n"," ")
 
 
-    print("\n\n",user_File)
-    user_metadata = str(user_File)+" "+str(attri)
-    user_metadata = user_metadata.replace(","," ")
+    # print("\n\n",user_File)
+    user_metadata = str(user_File)+" "+str(add_data)
+    user_metadata = user_metadata.replace(',',' ')
     print("user metadata",user_metadata)
 
     
-    with open("./User Data/" + username + ".csv ", 'w+') as file:
+    with open("./User Data/" + username + ".csv ", 'w') as file:
         file.write(user_metadata)
     
     # user_File.write(additional_attributes)
@@ -198,14 +203,14 @@ def get_dish_name(ingredients,username):
     # print("filterkey",filterkey,"keywords",keywords)
     ## making the filter map
     filtermap = dict(zip(suggestions,filterkey))
-    print("\n\nfiltermap",filtermap)
+    # print("\n\nfiltermap",filtermap)
     
     ## filtering
     try:
         for fkey,fvalue in filtermap.items():
-            print("allergies shown",allergy2)
+            # print("allergies shown",allergy2)
             if allergy2 in fvalue:
-                print(fkey,"is not suitable\n\n")
+                print("\n\n",fkey,"is not suitable\n\n")
                 del smap[fkey]
     except:
         pass
@@ -230,7 +235,7 @@ def get_dish_name(ingredients,username):
     ## ranking wrt recipe_rating*recipe_score
     # print(recipe_rating,recipe_score)
     recipe_rank = dict(ranking(recipe_rating,recipe_score))
-    print("RecipeRank",recipe_rank)
+    # print("RecipeRank",recipe_rank)
 
     return recipe_rank,prefer,shopping
     # return ranking(recipe_rating,recipe_score)

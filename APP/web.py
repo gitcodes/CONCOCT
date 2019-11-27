@@ -58,7 +58,7 @@ def get_all_dish_recipes(dishes):
     recipies_dishes = {}
     for dish,score in dishes.items():
        recipies_dishes[dish] = get_recipe(dish)
-    print("recipies_dishes",recipies_dishes)
+    # print("recipies_dishes",recipies_dishes)
     return recipies_dishes
 
 @app.route('/upvote',methods=('GET', 'POST'))
