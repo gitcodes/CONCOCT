@@ -4,6 +4,7 @@ import pandas as pd
 import operator
 from utilities import get_user_details
 
+import csv  
 
 def sort_coo(coo_matrix):
     tuples = zip(coo_matrix.col, coo_matrix.data)
@@ -80,9 +81,10 @@ def search(data,ingredients):
 def implicit_scoring(prefer,smap):
     recipe_score = {}
 
-    for key,value in smap.items():
+    
+    for key, value in smap.items():
         tempScore=0
-        for i,dish in enumerate(smap[key]):
+        for i, dish in enumerate(smap[key]):
             
             try:
                 #print(dish)
@@ -101,10 +103,12 @@ def ranking(recipe_rating,recipe_score):
         recipe_rank[key] = value * recipe_rating[key]
     
     ## sorting it OUT
-    recipe_rank = sorted(recipe_rank.items(), key=operator.itemgetter(1),reverse=True)
+    recipe_rank = sorted(recipe_rank.items(), key=operator.itemgetter(1), reverse=True)
     dishes = []
+    dishes_attri = []
     for dish in recipe_rank:
         dishes.append(dish[0])
+        dishes_attri.append(dish[1], dish[2], dish[3], dish[4])
     return dishes
         
 
@@ -146,11 +150,18 @@ def convertUserData(user):
     sorted_items=sort_coo(tf_idf_vector.tocoo())
     
     #extract only the top n; n here is 10
-    prefer=extract_topn_from_vector(feature_names,sorted_items,10)
+    prefer=extract_topn_from_vector(feature_names, sorted_items,10)
     
     return prefer
 
-def get_dish_name(ingredients = "cheese, flour, ham, honey mustard, eggs, onions, salt",username="sujit",allergy = "lactose"):
+
+def user_update(additional_attributes):
+    user_File = pd.read_csv("./User Data/" + username + ".csv", 'a')
+    user_File.write(additional_attributes)
+    user_File.close()
+
+
+def get_dish_name(ingredients,username):
     ## need to store user ingredients
     print("username",username,allergy)
     allergy2 =''
