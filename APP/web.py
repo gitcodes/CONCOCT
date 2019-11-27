@@ -1,7 +1,7 @@
-from get_dish import get_dish_name,convertUserData
+from get_dish import get_dish_name,convertUserData, user_update
 from get_recepie import get_recipe
 from utilities import save_user_details,authenticate_user_details
-from flask import (Flask,Blueprint, flash, g, redirect, render_template, request, session, url_for,jsonify)
+from flask import (Flask,Blueprint, flash, g, redirect, render_template, request, session, url_for,jsonify,Response)
 
 
 user = ""
@@ -53,11 +53,6 @@ def home():
         return render_template('home.html', recipies = recipies_for_dishes, score = recipe_rank, ing = list_general_ingredients, prefer=prefer, shopping=shopping)
     return render_template('home.html', recipies = recipies_for_dishes, ing = list_general_ingredients, prefer={'no':0,'preferences':0},shopping ={'no':0,'shopping cart':0} )
 
-    # else:
-    #     recipe_rank,prefer,shopping =  get_dish_name(list_general_ingredients,user)        
-    #     recipies_for_dishes =  get_all_dish_recipes(recipe_rank)
-    #     print()
-    #     return render_template('home.html', recipies = {'no':0,'recipe':0}, score = {'no':0,'recipe':0} ,ing=list_general_ingredients,prefer = {'no':0,'preferences':0}, shopping={'no':0,'shopping cart':0})
 
 def get_all_dish_recipes(dishes):
     recipies_dishes = {}
@@ -65,6 +60,19 @@ def get_all_dish_recipes(dishes):
        recipies_dishes[dish] = get_recipe(dish)
     print("recipies_dishes",recipies_dishes)
     return recipies_dishes
+
+@app.route('/upvote',methods=('GET', 'POST'))
+def upvote():
+    global user
+    print("upvoted")
+    dishes = request.args
+    
+    for key,recipe in dishes.items():
+        print(recipe)
+        print("user",user)
+        # return Response("Done")
+        user_update(recipe,user)
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':

@@ -130,12 +130,45 @@ def convertUserData(user):
     return prefer
 
 
-def user_update(additional_attributes):
-    user_File = pd.read_csv("./User Data/" + username + ".csv", 'a')
-    user_File.write(additional_attributes)
-    user_File.close()
+def user_update(recipe=0,username = "sujit"):
+    data = pd.read_csv("./Recipe Model/Updated_Dataset.csv")
+    
+    attri = ""
+    for i in range(len(data)):
+        if data.Dish_Name[i] == recipe:
+            attri = data.Cuisine[i] + ' ' + data.Difficulty[i] + ' ' + data.Meat[i]+ ' ' + data.Spicyness[i] + ' ' + data.Price_of_Ingredients[i]
+            # attri = [attri]
+    print("attributes to be added",attri)
+    
+    try:
+        with open("./User Data/" + username + ".csv","r") as file:
+            data = file.readlines()
+
+        print("data",data,type(data))
+        user_File = str(data[0]).replace("\n"," ")
+
+    except:
+        pass
+        with open("./User Data/" + username + ".csv","r") as file:
+            data = file.readlines()
+
+        print("data",data,type(data))
+        user_File = str(data[0]).replace("\n"," ")
 
 
+    print("\n\n",user_File)
+    user_metadata = str(user_File)+" "+str(attri)
+    user_metadata = user_metadata.replace(","," ")
+    print("user metadata",user_metadata)
+
+    
+    with open("./User Data/" + username + ".csv ", 'w+') as file:
+        file.write(user_metadata)
+    
+    # user_File.write(additional_attributes)
+    # user_File.close()
+
+    
 def get_dish_name(ingredients,username):
     ## need to store user ingredients
     print("username",username)
@@ -206,3 +239,4 @@ def get_dish_name(ingredients,username):
 ## get_dish name is main function
 if __name__ == '__main__':
     pass
+    user_update()

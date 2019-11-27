@@ -13,7 +13,7 @@ def save_user_details(userdetails):
 def create_user_specific_metadata(username,user_meta_data):
         path = "User Data/"+username+".csv"
         with open(path , 'a+',newline='') as csvfile:
-            spamwriter = csv.writer(csvfile, delimiter=',')
+            spamwriter = csv.writer(csvfile, delimiter=' ')
             spamwriter.writerow(user_meta_data)
 
 def get_user_details():

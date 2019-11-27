@@ -26,7 +26,7 @@
 
 					<form method="post" action = "/home">
 				    <label for="ingredients">Enter Ingredients</label><br>
-				    <input name="ingredients" id="ingredients" required>
+				    <input name="ingredients" style="width:800px;" id="ingredients" required>
 				    <button class="uk-icon-small-left" uk-icon="search" type="submit"></button>
 				  </form>
 						{% for dish,recipie in recipies.items() %}
@@ -34,8 +34,8 @@
 				  		<div class="uk-card uk-card-hover uk-background-muted uk-padding">
 					  		<div class="uk-text-large uk-text-bolder uk-card-title">{{dish}}
 						  		<div class="uk-align-right">
-						  			<a href="#" class="uk-icon-link" uk-icon="check" onclick=liked()>&nbsp;&nbsp;</a>
-						  			<a href="#" class="uk-icon-link" uk-icon="close" onclick=disliked()>&nbsp;&nbsp;</a>
+						  			<a href="/upvote?dish={{dish}}" class="uk-icon-link" uk-icon="check" onclick=liked()>&nbsp;&nbsp;</a>
+						  			<a href="/upvote?dish={{dish}}" class="uk-icon-link" uk-icon="close" onclick=disliked()>&nbsp;&nbsp;</a>
 							  	</div>
 							  	<p class = "uk-text-muted">{{score[id]}}</p>
 						  
