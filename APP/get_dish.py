@@ -2,6 +2,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 import pandas as pd
 import operator
+from utilities import get_user_details
+
 
 def sort_coo(coo_matrix):
     tuples = zip(coo_matrix.col, coo_matrix.data)
@@ -38,7 +40,10 @@ def search(data,ingredients):
     # user_ingredients = [x.strip() for x in user_ingredients.split(',')]
     suggestions = []
     grocery = []
+    filterkey = []
     keywords = []
+    shopping = dict()
+    
     for i in range(len(data)):
         temp = data.Ingredients[i]
         res = [x.strip() for x in temp.split(',')]
@@ -47,29 +52,34 @@ def search(data,ingredients):
             #print("Best Match - ", data.Dish_Name[i])
             suggestions.append(data.Dish_Name[i])
             cv = CountVectorizer()
-            attri = data.Cuisine[i] + ' , ' + data.Difficulty[i] + ' , ' + data.Meat[i]
+            attri = data.Cuisine[i] + ' , ' + data.Difficulty[i] + ' , ' + data.Meat[i]+ ' , ' + data.Spicyness[i] + ' , ' + data.Price_of_Ingredients[i]
             attri = [attri]
+
+            filter_attri= data.Veg_Nonveg[i]+ ' , ' + data.Vegan[i] + ' , ' + data.Allergy[i]
+            filter_attri=[filter_attri]
+            print(filter_attri)
+
             cv.fit(attri)
             keywords.append(list(cv.vocabulary_.keys()))
             #print(keywords)
+
+            cv.fit(filter_attri)
+            filterkey.append(list(cv.vocabulary_.keys()))
+            
             
         if(score <= 5 and score >= 1):
             #print(data.Dish_Name[i])
             grocery.append(data.Dish_Name[i])
+            # print(set(res) - set(ingredients))
+            shopping[data.Dish_Name[i]] = list(set(res) - set(ingredients))
 
-    return suggestions, grocery, keywords
+    return suggestions, filterkey, keywords, shopping
 
-def add_grocery(grocery, data, ingredients):
-	missing_ingredients = []
-	for i in range(len(data)):
-		temp = data.ingredients[i]
-		res = [x.strip() for x in temp.split(',')]
-		missing_ingredients = set(ingredients) - set(res)
-	return missing_ingredients
 
-def implicit_filtering(prefer,smap):
+
+def implicit_scoring(prefer,smap):
     recipe_score = {}
-    
+
     for key,value in smap.items():
         tempScore=0
         for i,dish in enumerate(smap[key]):
@@ -99,6 +109,27 @@ def ranking(recipe_rating,recipe_score):
         
 
 def convertUserData(user):
+    '''
+    cv=CountVectorizer()
+    word_count_vector = cv.fit_transform(user)
+     
+    tfidf_transformer = TfidfTransformer()
+    tfidf_transformer.fit(word_count_vector)
+    
+    #generate tf-idf for the given document
+    tf_idf_vector=tfidf_transformer.transform(cv.transform(user))
+    
+    # you only needs to do this once, this is a mapping of index to 
+    feature_names=cv.get_feature_names()
+    
+    #sort the tf-idf vectors set.csv")
+    sorted_items=sort_coo(tf_idf_vector.tocoo())
+    
+    #extract only the top n; n here is 10
+    prefer=extract_topn_from_vector(feature_names,sorted_items,10)
+    
+    return prefer
+    '''
     cv=CountVectorizer()
     word_count_vector = cv.fit_transform(user)
      
@@ -119,33 +150,74 @@ def convertUserData(user):
     
     return prefer
 
-
-def get_dish_name(ingredients,username):
+def get_dish_name(ingredients = "cheese, flour, ham, honey mustard, eggs, onions, salt",username="sujit",allergy = "lactose"):
     ## need to store user ingredients
-    users = pd.read_csv("./User Data/"+username+".csv")
-    recipes = pd.read_csv("./Recipe Model/Dataset.csv")
+    print("username",username,allergy)
+    allergy2 =''
+
+    try:
+        users = pd.read_csv("./User Data/"+username+".csv")
+    except:
+        pass
+    finally:
+        users = pd.read_csv("./User Data/username.csv")
+
+    recipes = pd.read_csv("./Recipe Model/Updated_Dataset.csv")
     
-    suggestions, grocery, keywords = search(recipes,ingredients)
+    ## allergies
+    user_attri = get_user_details()
+    for user in user_attri:
+        if username in user:
+            allergy2 = user[3]
+            print("allergy",allergy)
+    
+
+    suggestions, filterkey, keywords, shopping = search(recipes,ingredients)
     
     ## mapping suggestions and its keywords
     smap = dict(zip(suggestions,keywords))
+
+    # print("filterkey",filterkey,"keywords",keywords)
+    ## making the filter map
+    filtermap = dict(zip(suggestions,filterkey))
+    print("\n\nfiltermap",filtermap)
     
+    ## filtering
+    try:
+        for fkey,fvalue in filtermap.items():
+            print("allergies shown",allergy2)
+            if allergy2 in fvalue:
+                print(fkey,"is not suitable\n\n")
+                del smap[fkey]
+    except:
+        pass
+        # smap = dict(zip(suggestions,keywords))
+        print("Exception")
+
     ## still have to check which user preference to take
+    print(users)
     prefer = convertUserData(users)
-    
+    print("\nprefer - User preferences \n",prefer)
+ 
     ## sets recipe scores according to the preferences returned in the previous line
-    recipe_score = implicit_filtering(prefer,smap)
+    recipe_score = implicit_scoring(prefer,smap)
     
+
     ## inputs the particular recipe rating given by the user (default 1)
+    
     recipe_rating = {}
     for dish in recipes['Dish_Name']:
         recipe_rating[dish] = 1
-        
+     
     ## ranking wrt recipe_rating*recipe_score
-    print(recipe_rating,recipe_score)
-    return ranking(recipe_rating,recipe_score)
+    # print(recipe_rating,recipe_score)
+    recipe_rank = ranking(recipe_rating,recipe_score)
+    print("RecipeRank",recipe_rank)
+
+    return recipe_rank,prefer,shopping
+    # return ranking(recipe_rating,recipe_score)
 
     
 ## get_dish name is main function
-    if __name__ == '__main__':
-        get_dish_name()
+if __name__ == '__main__':
+    pass

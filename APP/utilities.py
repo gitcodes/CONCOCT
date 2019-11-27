@@ -21,6 +21,7 @@ def get_user_details():
     with open('Data/user.csv', 'r') as f:
         reader = csv.reader(f)
         users_list = list(reader)
+        # print(users_list)
     return users_list
 
 
@@ -29,7 +30,9 @@ def authenticate_user_details(username,password):
     for user in users:
         if username in user:
             if password == user[2]:
-                return True
+                allergy = user[3]
+                print("allergy",allergy)
+                return True,allergy
     
 
 

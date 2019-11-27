@@ -3,7 +3,9 @@ from get_recepie import get_recipe
 from utilities import save_user_details,authenticate_user_details
 from flask import (Flask,Blueprint, flash, g, redirect, render_template, request, session, url_for,jsonify)
 
-user = ''
+
+user = ""
+allergy =""
 app = Flask(__name__)   
 @app.route('/',methods=('GET', 'POST'))
 def index():
@@ -11,7 +13,8 @@ def index():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if (authenticate_user_details(username,password)):
+        auth,allergy = authenticate_user_details(username,password)
+        if auth:
             user = username
             return redirect(url_for('home'))
     return render_template('login.html')
@@ -31,7 +34,7 @@ def register():
         metadata.append(request.form['expertise_level'])
         userdetails = [details,metadata]
         save_user_details(userdetails)
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     return render_template('register.html')
 
 @app.route('/home',methods=('GET', 'POST'))
@@ -43,7 +46,7 @@ def home():
         user_ingredients = request.form['ingredients']
         user_ingredients = user_ingredients +','+list_general_ingredients
         user_ingredient_list = [x.strip() for x in user_ingredients.split(',')]
-        dishes =  get_dish_name(user_ingredient_list,user)        
+        dishes,prefer,shopping =  get_dish_name(user_ingredient_list,user,allergy)        
         recipies_for_dishes =  get_all_dish_recipes(dishes)
     return render_template('home.html',recepies = recipies_for_dishes,ing = list_general_ingredients)
 
